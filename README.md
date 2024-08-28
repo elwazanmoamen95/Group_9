@@ -20,3 +20,5 @@ Create the Controller Node Script:
 **Control Node:**
 - Marwan Abbas
 - Ahmed Khaled
+- Omar Islam
+- Ahmed Fawzy
