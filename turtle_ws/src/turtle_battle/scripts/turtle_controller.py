@@ -110,17 +110,12 @@ turtle_name = f"turtle{curr_turtle}"
 
 # ROS Publishers
 attack_pub = rospy.Publisher('/turtle_attack', String, queue_size=10)
-new_pub = rospy.Publisher('/new_turtle', Int8, queue_size=10)
 cmd_vel_pub = rospy.Publisher(f"/{turtle_name}/cmd_vel", Twist, queue_size=10)
 
 # ROS Subscriber
 start_sub = rospy.Subscriber('/game_started', Int8, start)
 
 twist = Twist()
-
-if new:
-    new_pub.publish(curr_turtle)
-    new = False
 
 print(f'Control {turtle_name} using WASD, Q to attack.')
 
