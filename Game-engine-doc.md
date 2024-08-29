@@ -28,7 +28,7 @@ This script implements the Game Engine component for a Turtle Battle Royale game
    - `update_turtle_pose(data, turtle_name)`: Callback method to update each turtle's stored position when a new pose message is received.
 
 5. **Handling Attacks**
-   - `attack_callback(msg)`: Called when an attack message is received from the control node. Processes the attack if the game has started by invoking `calculate_damage(attacker)`.
+   - `attack_callback(msg)`: Called when an attack message is received from the control node. Processes the attack if the game has started by using `calculate_damage(attacker)`.
 
 6. **Calculating Damage**
    - `calculate_damage(attacker)`: Checks if the attacker is within range to damage other turtles using `attack_within_distance(pose1, pose2)`. If in range, calls `process_attack(attacker, target)`.
