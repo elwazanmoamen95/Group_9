@@ -50,3 +50,8 @@ This script implements the Game Engine component for a Turtle Battle Royale game
 
 12. **Main Loop**
     - `run()`: The main loop that operates while the ROS node is active (`rospy.is_shutdown()` is `False`). Checks if the game has started and continuously verifies if game-ending conditions are met. Runs at the rate of 10 Hz.
+   
+## How to play
+First, you need to activate the game engine node using the command `rosrun turtle_battle game_engine.py`. This should open the simulation window and remove the default turtle. After that, other players can join by using the command `rosrun turtle_battle turtle_controller.py`, and all turtles will respawn in the same location. This location serves as the lobby, where players will gather before the match begins. Each player should go separate ways on the map before starting the match. (Note: players in the lobby before the match starts will not be able to attack each other.)
+
+Once everyone is ready, you can start the match using the `/start_game` service. After the game has started, no more players will be able to join, as the game will already be in progress.
