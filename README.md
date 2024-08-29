@@ -15,7 +15,7 @@ Create the Controller Node Script:
 - Moamen
 - Seif
 - Abdelrahman Tarek
-- Marwan Essam
+- Marwan Essam Gad
 
 **Control Node:**
 - Marwan Abbas
