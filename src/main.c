@@ -80,7 +80,7 @@ ISR(INT1_vect)
 
 ISR(TIMER1_COMPA_vect)
 {
-	rpm = (pulse_count * 60) / (PPR*6.5);  // Calculate RPM
+	rpm = (pulse_count * 60) / (PPR);  // Calculate RPM
 	pulse_count = 0;  // Reset pulse count for the next interval
 
 	// Split the RPM into two bytes and send via SPI
