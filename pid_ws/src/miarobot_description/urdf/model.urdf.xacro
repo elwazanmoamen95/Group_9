@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+
+<robot name="miarobot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find miarobot_description)/urdf/model.gazebo"/>
+  <xacro:include filename="$(find miarobot_description)/urdf/model_materials.xacro"/>
+  <xacro:include filename="$(find miarobot_description)/urdf/model.wheels.xacro"/>
+ 
+  <xacro:property name="kinectMass" value="0.25"></xacro:property>
+  <xacro:property name="kinectLength" value="0.25"></xacro:property>
+  <xacro:property name="kinectWidth" value="0.04"></xacro:property>
+  <xacro:property name="kinectHeight" value="0.03"></xacro:property>
+
+  <!-- ======================================= BASE LINK ======================================= -->
+  
+  <link name="base_link">
+    <visual>
+      <geometry>
+          <mesh filename="package://miarobot_description/meshes/miarobot_colored.dae"/>
+      </geometry>
+      <material name="blue"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/> 
+    </visual>
+
+    <collision>
+      <geometry>
+        <mesh filename="package://miarobot_description/meshes/miarobot.dae"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/> 
+    </collision>
+
+    <inertial>
+      <mass value="5"/>
+      <inertia ixx="10" ixy="0.0" ixz="0.0" iyy="10" iyz="0.0" izz="10"/>
+    </inertial>
+
+  </link>
+
+<!-- ======================================== WHEELS AND JOINTS ========================================= -->
+
+  <!-- Instantiating wheels -->
+  <xacro:miarobot_wheel wheel_suffix="left_front" joint_origin_xyz="0.15 0.15 0.04" >
+  </xacro:miarobot_wheel>
+  <xacro:miarobot_wheel wheel_suffix="left_back" joint_origin_xyz="-0.15 0.15 0.04">
+  </xacro:miarobot_wheel>
+  <xacro:miarobot_wheel wheel_suffix="right_front" joint_origin_xyz="0.15 -0.15 0.04">
+  </xacro:miarobot_wheel>
+  <xacro:miarobot_wheel wheel_suffix="right_back" joint_origin_xyz="-0.15 -0.15 0.04">
+  </xacro:miarobot_wheel>
+
+  <!-- Kinect Camera -->
+  <link name="kinect_camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${kinectWidth} ${kinectLength} ${kinectHeight}"/>
+      </geometry>
+    </collision>
+
+    <!-- <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${kinectWidth} ${kinectLength}  ${kinectHeight}"/>
+      </geometry>
+      <material name="green"/>
+    </visual> -->
+    <inertial>
+      <mass value="${kinectMass}" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <box_inertia m="${kinectMass}" x="{kinectLength}" y="${kinectWidth}" z="${kinectHeight}" />
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <joint name="kinect_camera_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0.16 0 0.185" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="kinect_camera_link"/>
+  </joint>
+
+  <!-- LIDAR -->
+  
+  <link name="laser">
+    <collision>
+      <origin xyz="0 0 0.26" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <joint name="hokuyo_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0.26" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="laser"/>
+  </joint>
+
+  <!-- IMU Sensor -->
+
+  <link name="imu_link">
+    <!-- <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </collision> -->
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+  
+  <joint name="imu_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0.18" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+
+  <link name="base_ir_back">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0"      izz="1e-6" />
+    </inertial>
+  </link>
+
+  <joint name="ir_back_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0.26" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="base_ir_back"/>
+  </joint>
+
+ </robot>

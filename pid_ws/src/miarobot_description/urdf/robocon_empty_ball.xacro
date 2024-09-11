@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <link name="ball">
+        <visual>
+            <geometry>
+                <sphere radius="0.095"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <geometry>
+                <sphere radius="0.095"/>
+            </geometry>
+        </collision>
+
+        <xacro:inertial_sphere mass="0.315" radius="0.095">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_sphere>
+    </link>
+
+    <gazebo reference="ball">
+        <material>Gazebo/Purple</material>
+        <mu1 value="0.08"/>
+        <mu2 value="0.08"/>
+    </gazebo>
+<!-- R:149 G:61 B:220 -->
+</robot>
+
+
+
+
+
+
+
+
+
