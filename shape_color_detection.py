@@ -5,10 +5,17 @@ def check_boundry(img,range,lower_bound,upper_bound):
     frist = img[:,:,0]
     sec = img[:,:,1]
     thierd = img[:,:,2]
-    y = range[0,0]+5
-    x = range[0,1]+5
+    y = range[0]
+    x = range[1]
     return frist[x,y] >= lower_bound[0] and frist[x,y] <= upper_bound[0] and sec[x,y] >= lower_bound[1] and sec[x,y] <= upper_bound[1] and thierd[x,y] >= lower_bound[2] and thierd[x,y] <= upper_bound[2]
-
+def medin(points):
+    x = 0
+    y = 0 
+    for i in range(len(points)):
+        x =x+ points[i,0,0]
+        y =y+ points[i,0,1]
+        print("======",points[i,0,0],"=======")
+    return x//len(points) ,y//len(points)
 def color_detect(img,range):
     img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     color= "unknown"
@@ -71,10 +78,12 @@ for contour in contours:
         shape = "Circle"
     else:
         shape = "Unknown"
-    color = color_detect(image,approx[0])
-
-    cv2.putText(image, color, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-    cv2.putText(image, shape, (x-5, y-15 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+    color = color_detect(image,medin(approx))
+    # print(approx)
+    # print("+++++++++++++++++++++++")
+    # print(medin(approx))
+    cv2.putText(image, color, (x+3, y+3 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+    cv2.putText(image, shape, (x-3, y-13 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
     cv2.drawContours(image, [approx], -1, (0, 0, 0), 5)
 
 plt.figure(figsize=(12, 6))
