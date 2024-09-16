@@ -1,4 +1,7 @@
+# Detection Model (XO_model.pt)
+We have successfully collected and labeled a dataset of 800 images for training and validating. This dataset has been utilized to train a YOLOv8n model. The dataset can be accessed via the following link: [Dataset](https://drive.google.com/drive/folders/1p8L1BXJy3eCwTQnomwf4Z4hK_xLWokFq?usp=sharing).
 
+# Game Engine (XO_game.py)
 
 ## Overview
 
